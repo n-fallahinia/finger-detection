@@ -1,0 +1,14 @@
+numpy
+Pillow
+<<<<<<< HEAD
+tensorflow-addons==0.11.1
+=======
+tensorflow==2.3.1
+>>>>>>> 9adfb853530c118f1ea58dcb6fc77d0cf405e746
+tabulate
+tqdm
+packaging
+onnxruntime
+onnx==1.7.0
+onnx-tf
+netron
