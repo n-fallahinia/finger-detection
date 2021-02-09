@@ -38,21 +38,21 @@ parser = argparse.ArgumentParser(
 parser.add_argument("-x",
                     "--xml_dir",
                     help="Path to the folder where the input .xml files are stored.",
-                    default='/home/navid/object_detection/workspace/training_demo/images/train/annotations',
+                    default='./images/train/annotations',
                     type=str)
 parser.add_argument("-l",
                     "--labels_path",
-                    default="/home/navid/object_detection/workspace/training_demo/annotations/label_map.pbtxt",
+                    default="./annotations/label_map.pbtxt",
                     help="Path to the labels (.pbtxt) file.", type=str)
 parser.add_argument("-o",
                     "--output_path",
-                    default='/home/navid/object_detection/workspace/training_demo/annotations/train.record',
+                    default='./annotations/train.record',
                     help="Path of output TFRecord (.record) file.", type=str)
 parser.add_argument("-i",
                     "--image_dir",
                     help="Path to the folder where the input image files are stored. "
                          "Defaults to the same directory as XML_DIR.",
-                    type=str, default='/home/navid/object_detection/workspace/training_demo/images/train/raw_image')
+                    type=str, default='./images/train/raw_image')
 parser.add_argument("-c",
                     "--csv_path",
                     help="Path of output .csv file. If none provided, then no file will be "
