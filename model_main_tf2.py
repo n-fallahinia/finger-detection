@@ -1,9 +1,12 @@
 r"""Creates and runs TF2 object detection models.
+===============================================
+Navid Fallahinia - 12/15/2020
+BioRobotics Lab
 
 For local training/evaluation run:
-PIPELINE_CONFIG_PATH=path/to/pipeline.config
-MODEL_DIR=/tmp/model_outputs
-NUM_TRAIN_STEPS=10000
+PIPELINE_CONFIG_PATH= mobilenet_v2.config
+MODEL_DIR=./models/my_ssd_resnet50_v1_fpn
+NUM_TRAIN_STEPS=1500
 SAMPLE_1_OF_N_EVAL_EXAMPLES=1
 python model_main_tf2.py -- \
   --model_dir=$MODEL_DIR --num_train_steps=$NUM_TRAIN_STEPS \
@@ -12,28 +15,32 @@ python model_main_tf2.py -- \
   --alsologtostderr
 """
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'    # Suppress TensorFlow logging (1)
 
 from absl import flags
 import tensorflow.compat.v2 as tf
 from object_detection import model_lib_v2
 
-flags.DEFINE_string('pipeline_config_path', None, 'Path to pipeline config '
+flags.DEFINE_string('pipeline_config_path', 'mobilenet_v2.config', 'Path to pipeline config '
                     'file.')
-flags.DEFINE_integer('num_train_steps', None, 'Number of train steps.')
+
+flags.DEFINE_string('model_dir', './models/model_1/', 'Path to output model directory '
+                    'where event and checkpoint files will be written.')
+
+flags.DEFINE_integer('num_train_steps', 2500, 'Number of train steps.')
+
 flags.DEFINE_bool('eval_on_train_data', False, 'Enable evaluating on train '
                   'data (only supported in distributed training).')
+
 flags.DEFINE_integer('sample_1_of_n_eval_examples', None, 'Will sample one of '
                      'every n eval input examples, where n is provided.')
+
 flags.DEFINE_integer('sample_1_of_n_eval_on_train_examples', 5, 'Will sample '
                      'one of every n train input examples for evaluation, '
                      'where n is provided. This is only used if '
                      '`eval_training_data` is True.')
-flags.DEFINE_string(
-    'model_dir', None, 'Path to output model directory '
-                       'where event and checkpoint files will be written.')
-flags.DEFINE_string(
-    'checkpoint_dir', None, 'Path to directory holding a checkpoint.  If '
+
+flags.DEFINE_string('checkpoint_dir', None, 'Path to directory holding a checkpoint.  If '
     '`checkpoint_dir` is provided, this binary operates in eval-only mode, '
     'writing resulting metrics to `model_dir`.')
 
@@ -41,25 +48,18 @@ flags.DEFINE_integer('eval_timeout', 3600, 'Number of seconds to wait for an'
                      'evaluation checkpoint before exiting.')
 
 flags.DEFINE_bool('use_tpu', False, 'Whether the job is executing on a TPU.')
-flags.DEFINE_string(
-    'tpu_name',
-    default=None,
-    help='Name of the Cloud TPU for Cluster Resolvers.')
-flags.DEFINE_integer(
-    'num_workers', 1, 'When num_workers > 1, training uses '
-    'MultiWorkerMirroredStrategy. When num_workers = 1 it uses '
+flags.DEFINE_string('tpu_name', default=None, help='Name of the Cloud TPU for Cluster Resolvers.')
+flags.DEFINE_integer('num_workers', 1, 'When num_workers > 1, training uses ''MultiWorkerMirroredStrategy. When num_workers = 1 it uses '
     'MirroredStrategy.')
-flags.DEFINE_integer(
-    'checkpoint_every_n', 1000, 'Integer defining how often we checkpoint.')
-flags.DEFINE_boolean('record_summaries', True,
-                     ('Whether or not to record summaries during'
-                      ' training.'))
+
+flags.DEFINE_integer('checkpoint_every_n', 1000, 'Integer defining how often we checkpoint.')
+flags.DEFINE_boolean('record_summaries', True,('Whether or not to record summaries during'' training.'))
 
 FLAGS = flags.FLAGS
 
 
 def main(unused_argv):
-      
+     
   # ste the gpu (device:GPU:0) 
   print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
   gpus = tf.config.experimental.list_physical_devices('GPU')

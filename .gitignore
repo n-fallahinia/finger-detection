@@ -4,6 +4,8 @@ exported-models/
 images/
 exported-models
 pre-trained-models/
+inference_graph_*/
+models/
 
 
 # Byte-compiled / optimized / DLL files
