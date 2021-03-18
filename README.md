@@ -52,8 +52,8 @@ python3 model_main_tf2.py --model_dir {$MODEL_DIR} --num_train_steps {$NUM_TRAIN
  5. **Test the model**. You can run the inference test to see the detected fingers.
 
 <p align="center">
-    <img src="data/img1.png" width="250" title="">
-    <img src="data/img2.png" width="250" alt="">
-    <img src="data/img3.png" width="250" alt="">
-    <img src="data/img4.png" width="250" alt="">
+    <img src="data/img1.png" width="200" height="250" title="">
+    <img src="data/img2.png" width="200" height="250" alt="">
+    <img src="data/img3.png" width="200" height="250" alt="">
+    <img src="data/img4.png" width="200" height="250" alt="">
 </p>
